@@ -2,7 +2,9 @@
   --maxLayoutWidth: 1100px;
   --light: #fff;
   --dark: #000;
+  --blue: blue;
 
+  --xSmallSpacing: 0.5rem;
   --smallSpacing: 1rem;
 
   --mediumFontSize: 1.5rem;
@@ -18,6 +20,11 @@
 
 * {
   box-sizing: border-box;
+}
+
+:focus {
+  outline-width: var(--xSmallSpacing);
+  outline-color: var(--blue);
 }
 
 html,

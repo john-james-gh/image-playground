@@ -1,10 +1,7 @@
 const app = require("express")();
 const images = require("./src/images.json");
-const cors = require("cors");
 const morgan = require("morgan");
 const apicache = require("apicache");
-
-app.use(cors());
 
 app.use(morgan("dev"));
 
@@ -23,7 +20,6 @@ const logResponseTime = (req, res, next) => {
   res.on("finish", () => {
     const elapsedHrTime = process.hrtime(startHrTime);
     const elapsedTimeInMs = elapsedHrTime[0] * 1000 + elapsedHrTime[1] / 1e6;
-    /** since `get` is cached after the first query, the response time won't be logged as it is required for `get` to run */
     console.log("%s : %fms", req.path, elapsedTimeInMs);
   });
 

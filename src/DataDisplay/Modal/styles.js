@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const ModalContainer = styled.div`
   display: grid;
   place-items: center;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
   position: fixed;
   height: 100%;
   width: 100%;

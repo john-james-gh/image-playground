@@ -1,0 +1,37 @@
+:root {
+  --maxLayoutWidth: 1100px;
+  --light: #fff;
+  --dark: #000;
+
+  --smallSpacing: 1rem;
+
+  --mediumFontSize: 1.5rem;
+  --largeFontSize: 2rem;
+
+  --smallBreakpoint: 768px;
+  --mediumBreakpoint: 1200px;
+
+  --twoColumn: repeat(2, 1fr);
+  --threeColumn: repeat(3, 1fr);
+  --fourColumn: repeat(4, 1fr);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+p {
+  padding: 0;
+  margin: 0;
+}

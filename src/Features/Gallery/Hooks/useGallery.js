@@ -11,7 +11,7 @@ const useGallery = (props) => {
     const abortController = new AbortController();
 
     const fetcher = async () => {
-      if (localStorage.getItem(path)) {
+      if (localStorage.getItem(path) && !error) {
         setData(JSON.parse(localStorage.getItem(path)));
 
         setIsLoading(false);

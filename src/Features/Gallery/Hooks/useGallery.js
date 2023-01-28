@@ -27,8 +27,10 @@ const useGallery = (props) => {
 
         const data = await response.json();
 
-        const cache = { data, timestamp: Date.now() };
-        localStorage.setItem(path, JSON.stringify(cache));
+        if (init?.method === undefined || init?.method === "GET") {
+          const cache = { data, timestamp: Date.now() };
+          localStorage.setItem(path, JSON.stringify(cache));
+        }
         setData(data);
       } catch (error) {
         setError(error.message);

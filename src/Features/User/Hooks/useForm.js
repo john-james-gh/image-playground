@@ -79,7 +79,7 @@ const useForm = (props) => {
           resolve("success");
           setIsSuccess(true);
           setIsSubmitting(false);
-        }, 1000);
+        }, 300);
       });
     })();
   };

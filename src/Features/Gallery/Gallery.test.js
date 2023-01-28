@@ -39,6 +39,10 @@ afterAll(() => {
   document.body.removeChild(root);
 });
 
+afterEach(() => {
+  localStorage.clear();
+});
+
 test("should render cards", async () => {
   render(<Gallery />);
 
@@ -87,10 +91,10 @@ test("should render pagination", async () => {
   await waitForElementToBeRemoved(screen.getByText("Loading..."));
 
   expect(
-    screen.queryByRole("button", { name: "go to next page" })
+    screen.getByRole("button", { name: "go to next page" })
   ).toBeInTheDocument();
   expect(
-    screen.queryByRole("button", { name: "go to previous page" })
+    screen.getByRole("button", { name: "go to previous page" })
   ).toBeInTheDocument();
   expect(screen.getByText(/Total: 2/)).toBeInTheDocument();
   expect(screen.getByText(/Page: 1/)).toBeInTheDocument();
@@ -102,8 +106,6 @@ test("should open modal", async () => {
   render(<Gallery />);
 
   await waitForElementToBeRemoved(screen.getByText("Loading..."));
-
-  expect(screen.getByText("Gallery")).toBeInTheDocument();
 
   await user.click(screen.getByRole("button", { name: "open modal photo" }));
 

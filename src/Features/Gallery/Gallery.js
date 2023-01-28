@@ -23,19 +23,19 @@ const Gallery = () => {
         {isLoading ? (
           <h2>Loading...</h2>
         ) : (
-          data.items.map((d, index) => (
-            <Fragment key={d.url}>
+          data.items.map(({ url, alt_description }, index) => (
+            <Fragment key={url}>
               <li>
                 <S.Button
                   aria-haspopup={true}
                   aria-label="open modal photo"
-                  aria-describedby={d.alt_description}
+                  aria-describedby={alt_description}
                   type="button"
                   onClick={() => setIsOpen({ [index]: true })}
                 >
                   <S.Image
-                    alt={d.alt_description}
-                    src={`${d.url}.jpg`}
+                    alt={alt_description}
+                    src={`${url}.jpg`}
                     height="100px"
                     width="100px"
                     loading="eager"
@@ -48,8 +48,9 @@ const Gallery = () => {
                 <Modal onClose={() => setIsOpen({ [index]: false })}>
                   <S.Modalmage
                     loading="eager"
-                    src={`${d.url}.jpg`}
-                    alt={d.alt_description}
+                    decoding="sync"
+                    src={`${url}.jpg`}
+                    alt={alt_description}
                   />
                 </Modal>
               )}

@@ -32,4 +32,5 @@ export const IconCloseButton = styled.button`
   right: var(--smallSpacing);
   font-size: var(--mediumFontSize);
   background-color: var(--light);
+  cursor: pointer;
 `;

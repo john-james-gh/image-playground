@@ -38,7 +38,7 @@ const Gallery = () => {
                     src={`${d.url}.jpg`}
                     height="100px"
                     width="100px"
-                    loading="lazy"
+                    loading="eager"
                   />
                 </S.Button>
               </li>
@@ -46,7 +46,7 @@ const Gallery = () => {
               {isOpen[index] && (
                 <Modal onClose={() => setIsOpen({ [index]: false })}>
                   <S.Modalmage
-                    loading="lazy"
+                    loading="eager"
                     src={`${d.url}.jpg`}
                     alt={d.alt_description}
                   />

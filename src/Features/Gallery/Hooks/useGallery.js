@@ -11,38 +11,49 @@ const useGallery = (props) => {
     const abortController = new AbortController();
 
     const fetcher = async () => {
-      if (localStorage.getItem(path) && !error) {
-        setData(JSON.parse(localStorage.getItem(path)));
+      setIsLoading(true);
+      setError("");
 
+      try {
+        const response = await fetch(path, {
+          ...init,
+          headers: {
+            ...init?.headers,
+          },
+          signal: abortController.signal,
+        });
+
+        if (!response.ok) throw new Error("something went wrong");
+
+        const data = await response.json();
+
+        const cache = { data, timestamp: Date.now() };
+        localStorage.setItem(path, JSON.stringify(cache));
+        setData(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
         setIsLoading(false);
-      } else {
-        setIsLoading(true);
-        setError("");
-
-        try {
-          const response = await fetch(path, {
-            ...init,
-            headers: {
-              ...init?.headers,
-            },
-            signal: abortController.signal,
-          });
-
-          if (!response.ok) throw new Error("something went wrong");
-
-          const data = await response.json();
-
-          localStorage.setItem(path, JSON.stringify(data));
-          setData(data);
-        } catch (error) {
-          setError(error.message);
-        } finally {
-          setIsLoading(false);
-        }
       }
     };
 
-    fetcher();
+    if (localStorage.getItem(path)) {
+      setIsLoading(true);
+      const cache = JSON.parse(localStorage.getItem(path));
+
+      const maxAge = 1000 * 60 * 5; /** 5 minutes */
+
+      /** use cache if it hasn't been more than `maxAge` since it was cached */
+      if (Date.now() - cache.timestamp < maxAge) {
+        setIsLoading(false);
+        setData(cache.data);
+      } else {
+        localStorage.removeItem(path);
+        fetcher();
+      }
+    } else {
+      fetcher();
+    }
 
     return () => abortController.abort();
   }, [init, path]);

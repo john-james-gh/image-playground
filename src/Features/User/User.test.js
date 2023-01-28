@@ -48,6 +48,8 @@ test("should submit successfully", async () => {
   await user.type(screen.getByLabelText("Favorite color (Optional)"), "black");
   await user.click(screen.getByText("Submit"));
 
+  expect(screen.getByText("Loading...")).toBeInTheDocument();
+
   await waitFor(() => {
     expect(screen.getByText("Submitted sucessfully!")).toBeInTheDocument();
   });

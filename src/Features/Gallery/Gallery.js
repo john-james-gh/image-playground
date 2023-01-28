@@ -39,6 +39,7 @@ const Gallery = () => {
                     height="100px"
                     width="100px"
                     loading="eager"
+                    decoding="sync"
                   />
                 </S.Button>
               </li>

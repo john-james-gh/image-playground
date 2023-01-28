@@ -23,17 +23,17 @@ test("should resolve", async () => {
 
 test("should reject", async () => {
   server.use(
-    rest.get("/fake", (req, res, ctx) =>
+    rest.get("/error", (req, res, ctx) =>
       res(ctx.json({ error: "fail" }), ctx.status(400))
     )
   );
 
-  const { result } = renderHook(() => useGallery({ path: "/fake" }));
+  const { result } = renderHook(() => useGallery({ path: "/error" }));
 
   await waitFor(() => {
     expect(result.current.isLoading).toBe(false);
   });
 
-  expect(result.current.data).toBe(undefined);
+  expect(result.current.data).toStrictEqual(undefined);
   expect(result.current.error).toBe("something went wrong");
 });

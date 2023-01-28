@@ -11,26 +11,34 @@ const useGallery = (props) => {
     const abortController = new AbortController();
 
     const fetcher = async () => {
-      setIsLoading(true);
-      setError("");
+      if (localStorage.getItem(path)) {
+        setData(JSON.parse(localStorage.getItem(path)));
 
-      try {
-        const response = await fetch(path, {
-          ...init,
-          headers: {
-            ...init?.headers,
-          },
-          signal: abortController.signal,
-        });
-
-        if (!response.ok) throw new Error("something went wrong");
-
-        const data = await response.json();
-        setData(data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
         setIsLoading(false);
+      } else {
+        setIsLoading(true);
+        setError("");
+
+        try {
+          const response = await fetch(path, {
+            ...init,
+            headers: {
+              ...init?.headers,
+            },
+            signal: abortController.signal,
+          });
+
+          if (!response.ok) throw new Error("something went wrong");
+
+          const data = await response.json();
+
+          localStorage.setItem(path, JSON.stringify(data));
+          setData(data);
+        } catch (error) {
+          setError(error.message);
+        } finally {
+          setIsLoading(false);
+        }
       }
     };
 
